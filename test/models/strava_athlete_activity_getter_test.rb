@@ -7,7 +7,9 @@ class StravaAthleteActivityGetterTest < ActiveSupport::TestCase
       
       result = StravaAthleteActivityGetter.get_activities
       assert result
-      require "pry"; binding.pry
+      
+      
+      # require "pry"; binding.pry
       assert_greater_than 50, result.count
     end
   end

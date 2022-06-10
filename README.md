@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A small supporting application split from:
 
-Things you may want to cover:
+https://github.com/josh-works/strava_run_polylines_osm (OG python app)
+https://github.com/josh-works/mobility-maps (rails replacement of OG python app)
 
-* Ruby version
+This app that you're reading right now might end up picking up bits and pieces of the python app, for testing and profit.
 
-* System dependencies
+For example, I've run a few migrations and created some basic classes.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

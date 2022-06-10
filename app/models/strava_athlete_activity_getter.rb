@@ -21,11 +21,8 @@ class StravaAthleteActivityGetter
     response = https.request(request)
     data = JSON.parse(response.body)
     
-    data.each do |activity|
-      activity.symbolize_keys
-      
-      activity_params = activity.fetch_values(:name)
-
+    data.each do |activity_params|
+      activity_params.symbolize_keys!
       
       Activity.create(activity_params)
     end
