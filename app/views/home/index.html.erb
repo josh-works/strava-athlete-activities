@@ -1,0 +1,86 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+
+get auth code:
+
+<a href="
+https://www.strava.com/oauth/authorize?client_id=63764&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=force&scope=activity:read_all">get auth code</a>
+
+```ruby
+auth_params = {
+  client_id: "63764",
+  response_type: "code",
+  redirect_uri: "http://localhost/exchange_token",
+  approval_prompt: "force",
+  scope: "activity:read_all"
+}
+
+```
+response:
+
+http://localhost/exchange_token?state=&code=a2aea8682ed22d10f5669ac3432532764543fcff&scope=read,activity:read_all
+
+```ruby
+token_params = {
+  code: "2aea8682ed",
+  scope: "read,activity:read_all"
+}
+token.create(token_params)
+```
+
+post https://www.strava.com/oauth/token?client_id=63764&client_secret=2e6c5168e3b97a9c0975e5377041b8a416b4fbf8&code=a2aea8682ed22d10f5669ac3432532764543fcff&grant_type=authorization_code
+
+```ruby
+require "uri"
+require "net/http"
+
+url = URI("https://www.strava.com/oauth/token?client_id=63764&client_secret=2e6c5168e3b97a9c0975e5377041b8a416b4fbf8&code=a2aea8682ed22d10f5669ac3432532764543fcff&grant_type=authorization_code")
+
+https = Net::HTTP.new(url.host, url.port)
+https.use_ssl = true
+
+request = Net::HTTP::Post.new(url)
+request["Cookie"] = "_strava4_session=vkml9ms5bqs89hgkfdf79ob12qp2gujg"
+
+response = https.request(request)
+puts response.read_body
+
+```
+
+response:
+
+```ruby
+{
+    "token_type": "Bearer",
+    "expires_at": 1654875658,
+    "expires_in": 21600,
+    "refresh_token": "932469c09ef3da9dbec99a9c8e8364b0f885b021",
+    "access_token": "70bf1be1d6e6ae36c1c64f0f5feae95d76c5ae43",
+    "athlete": {
+        "id": 38072598,
+        "username": null,
+        "resource_state": 2,
+        "firstname": "Josh",
+        "lastname": "Thompson",
+        "bio": "Follow me for pictures of urban mobility networks. :)",
+        "city": "Golden",
+        "state": "CO",
+        "country": null,
+        "sex": "M",
+        "premium": true,
+        "summit": true,
+        "created_at": "2019-01-09T18:48:39Z",
+        "updated_at": "2022-05-28T06:08:41Z",
+        "badge_type_id": 1,
+        "weight": 63.5029,
+        "profile_medium": "https://dgalywyr863hv.cloudfront.net/pictures/athletes/38072598/11197049/2/medium.jpg",
+        "profile": "https://dgalywyr863hv.cloudfront.net/pictures/athletes/38072598/11197049/2/large.jpg",
+        "friend": null,
+        "follower": null
+    }
+}
+
+athelete = Athelete.new(response[:athlete])
+athelete.token = Token.new(response)
+```
+
