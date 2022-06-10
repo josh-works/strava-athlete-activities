@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  strava_id: 1
+  polyline: MyText
+  activity: one
+
+two:
+  strava_id: 1
+  polyline: MyText
+  activity: two
