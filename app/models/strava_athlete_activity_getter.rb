@@ -3,7 +3,7 @@ require "uri"
 require "net/http"
 
 class StravaAthleteActivityGetter
-  PARAMS_TO_KEEP = Activity.column_names.map(&:to_sym)
+  # PARAMS_TO_KEEP = Activity.column_names.map(&:to_sym)
   
   def self.get_activities
     token = "70bf1be1d6e6ae36c1c64f0f5feae95d76c5ae43"
@@ -20,11 +20,21 @@ class StravaAthleteActivityGetter
 
     response = https.request(request)
     data = JSON.parse(response.body)
-    
-    data.each do |activity_params|
-      activity_params.symbolize_keys!
-      
-      Activity.create(activity_params)
+    data.each do |row|
+      activity = Activity.create(
+        name: row["name"],
+        strava_id: row["id"],
+        distance: row["distance"],
+        moving_time: row["moving_time"],
+        elapsed_time: row["elapsed_time"],
+        total_elevation_gain: row["total_elevation_gain"],
+        elev_high: row["elev_high"],
+        elev_low: row["elev_low"],
+        average_speed: row["average_speed"],
+        max_speed: row["max_speed"],
+        start_date: row["start_date"],
+      )
+      Rails.logger.info("Created #{activity.id}, #{activity.name}")
     end
 
   end
