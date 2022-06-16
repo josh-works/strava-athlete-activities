@@ -1,3 +1,4 @@
 class Activity < ApplicationRecord
-  has_many :polylines
+  has_one :polyline
+  belongs_to :athlete
 end

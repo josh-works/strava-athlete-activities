@@ -2,7 +2,7 @@
 
 one:
   strava_id: 1
-  name: MyString
+  name: Trip from A to B
   distance: 1.5
   moving_time: MyString
   elapsed_time: 1
@@ -14,8 +14,8 @@ one:
   start_date: 2022-06-10 02:41:02
 
 two:
-  strava_id: 1
-  name: MyString
+  strava_id: 2
+  name: Trip from B to C
   distance: 1.5
   moving_time: MyString
   elapsed_time: 1

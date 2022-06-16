@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_10_091731) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_154826) do
   create_table "activities", force: :cascade do |t|
     t.integer "strava_id"
     t.string "name"
     t.float "distance"
-    t.integer "moving_time"
+    t.string "moving_time"
     t.integer "elapsed_time"
     t.float "total_elevation_gain"
     t.float "elev_high"
@@ -23,6 +23,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_10_091731) do
     t.float "average_speed"
     t.float "max_speed"
     t.datetime "start_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "athlete_id"
+    t.index ["athlete_id"], name: "index_activities_on_athlete_id"
+  end
+
+  create_table "athletes", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.integer "strava_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,5 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_10_091731) do
     t.index ["activity_id"], name: "index_polylines_on_activity_id"
   end
 
+  add_foreign_key "activities", "athletes"
   add_foreign_key "polylines", "activities"
 end
