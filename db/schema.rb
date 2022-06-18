@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_12_154826) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_18_200018) do
   create_table "activities", force: :cascade do |t|
     t.integer "strava_id"
     t.string "name"
@@ -46,6 +46,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_12_154826) do
     t.index ["activity_id"], name: "index_polylines_on_activity_id"
   end
 
+  create_table "tokens", force: :cascade do |t|
+    t.integer "athlete_id", null: false
+    t.string "token_type"
+    t.string "access_token"
+    t.integer "expires_in"
+    t.integer "expires_at"
+    t.string "refresh_token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["athlete_id"], name: "index_tokens_on_athlete_id"
+  end
+
   add_foreign_key "activities", "athletes"
   add_foreign_key "polylines", "activities"
+  add_foreign_key "tokens", "athletes"
 end

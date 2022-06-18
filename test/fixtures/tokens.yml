@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  athlete: one
+  token_type: Bearer
+  access_token: c949e282c5e92fd4239f61e2538d3d251f5962b8
+  expires_in: 21311
+  expires_at: 1655582108
+  refresh_token: 932469c09ef3da9dbec99a9c8e8364b0f885b021
+two:
+  athlete: two
+  token_type: MyString
+  access_token: MyString
+  expires_in: 1
+  expires_at: 1
+  refresh_token: MyString
