@@ -1,4 +1,4 @@
 class Athlete < ApplicationRecord
   has_many :activities
-  belongs_to :token
+  has_one :token
 end
