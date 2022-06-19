@@ -38,14 +38,19 @@ class Token < ApplicationRecord
 
     response = https.request(request).read_body
     formatted = JSON.parse(response)
-    p formatted
     p "old token: #{token.access_token}"
     p "new token: #{formatted["access_token"]}"
-    if formatted["access_token"] && (formatted["access_token"] != token.access_token)
-      token.access_token = formatted["access_token"]
-      token.refresh_token = formatted["refresh_token"]
-      token.save
-    end
+    
+    return unless formatted["access_token"] && (formatted["access_token"] != token.access_token)
+    
+    token.access_token = formatted["access_token"]
+    token.refresh_token = formatted["refresh_token"]
+    token.expires_in = formatted["expires_in"]
+    token.expires_at = formatted["expires_at"]
+    
+    token.save
+    
+    return token
   end
 
   def self.newest_token

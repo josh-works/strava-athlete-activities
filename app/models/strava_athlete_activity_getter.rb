@@ -6,6 +6,7 @@ class StravaAthleteActivityGetter
   # PARAMS_TO_KEEP = Activity.column_names.map(&:to_sym)
   
   def self.token
+    p "getting token"
     Token.last.access_token
   end
   
