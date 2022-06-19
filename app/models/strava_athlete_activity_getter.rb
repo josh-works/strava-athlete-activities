@@ -25,21 +25,24 @@ class StravaAthleteActivityGetter
 
       response = https.request(request)
       data = JSON.parse(response.body)
+      p data
+      return if data.empty?
+      
       data.each do |row|
-        activity = Activity.find_or_create_by(
-          athlete: athlete,
-          name: row["name"],
-          strava_id: row["id"],
-          distance: row["distance"],
-          moving_time: row["moving_time"],
-          elapsed_time: row["elapsed_time"],
-          total_elevation_gain: row["total_elevation_gain"],
-          elev_high: row["elev_high"],
-          elev_low: row["elev_low"],
-          average_speed: row["average_speed"],
-          max_speed: row["max_speed"],
-          start_date: row["start_date"],
-        )
+        activity = Activity.find_or_create_by(strava_id: row["id"]) do |a|
+          a.athlete = athlete,
+          a.name = row["name"],
+          a.strava_id = row["id"],
+          a.distance = row["distance"],
+          a.moving_time = row["moving_time"],
+          a.elapsed_time = row["elapsed_time"],
+          a.total_elevation_gain = row["total_elevation_gain"],
+          a.elev_high = row["elev_high"],
+          a.elev_low = row["elev_low"],
+          a.average_speed = row["average_speed"],
+          a.max_speed = row["max_speed"],
+          a.start_date = row["start_date"]
+        end
         
         Polyline.new(activity: activity, polyline: row["map"]["polyline"])
         Rails.logger.info("Created #{activity.id}, #{activity.name}")
